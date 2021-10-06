@@ -16,7 +16,7 @@ Route::get('/template', function(){
 
 Route::get('/dashboard', function () {
     return view('dashboard.home');
-})->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 //  ------- Registrando rotas individualmente -------
 /*
@@ -34,3 +34,12 @@ Route::post('/tasks/{task}/check', [TaskController::class, 'check'])
     
 Route::resource('/tasks', TaskController::class);
 
+// Route::get('/login', function (){
+//     return view('auth.login');
+// });
+
+// Route::get('/register', function (){
+//     return view('auth.register');
+// });
+
+require __DIR__.'/auth.php';

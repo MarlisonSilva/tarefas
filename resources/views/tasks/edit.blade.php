@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 
 <head>
 
@@ -17,8 +17,6 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    @yield('styles')
 
 </head>
 
@@ -53,39 +51,27 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Tarefas
+                Interface
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('tasks.index') }}">
-                    <i class="fas fa-fw fa-tasks"></i>
-                    <span>Todas as tarefas</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Components</span>
                 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('tasks.index') }}">
-                    <i class="fas fa-fw fa-clock"></i>
-                    <span>Tarefas pendentes</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('tasks.index') }}">
-                    <i class="fas fa-fw fa-check"></i>
-                    <span>Tarefas concluídas</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('tasks.index') }}">
-                    <i class="fas fa-fw fa-times"></i>
-                    <span>Tarefas atrasadas</span>
-                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" href="buttons.html">Buttons</a>
+                        <a class="collapse-item" href="cards.html">Cards</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            {{-- <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
@@ -101,7 +87,7 @@
                         <a class="collapse-item" href="utilities-other.html">Other</a>
                     </div>
                 </div>
-            </li> --}}
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -361,13 +347,10 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" onclick="document.querySelector('#logout-form').submit();" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
-                                <form id="logout-form" method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                </form>
                             </div>
                         </li>
 
@@ -381,15 +364,32 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        @yield('title-content')
-                        
-                        
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
 
                     <div class="row">
                         <div class="col">
-                            @yield('content')
-                            
+                            <form action="{{ route('tasks.update', ['task'=>$task->id]) }}" method="POST" class="user">
+                                @method('put')
+                                @csrf
+                                <div class="form-group">
+                                    <label for="task">Tarefa</label>
+                                    <input type="text" class="form-control" id="task" name="task" value="{{ $task->task }}"> 
+                                </div> 
+                                <div class="form-group">
+                                    <label for="description">Descrição</label>
+                                    <input type="text" class="form-control" id="description" name="description" value="{{ $task->description }}">
+                                </div> 
+
+                                <button type="submit" class="btn btn-primary">
+                                    Enviar
+                                </button>
+                                <a href="#" class="btn btn-secondary">
+                                    Cancelar
+                                </a>
+                            </form>
                         </div>
                     </div>
                     

@@ -6,34 +6,25 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $lista = Task::all();
         return view('tasks.index', ['tasks'=>$lista]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         return view('tasks.create');
 
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
+    
     public function store(Request $request)
     {
 
@@ -47,38 +38,24 @@ class TaskController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    
+    public function show(Task $task)
     {
+        // $task = Task::find($id);
+        return view('tasks.show', ['task'=>$task]);
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    
+    public function edit(Task $task)
     {
-        //
+        return view('tasks.edit', ['task'=>$task]);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function check($id)
-    {
-        $task = Task::find($id);
-        
+    
+    public function check(Task $task)
+    {   
         if($task->checked) {
             $task->checked = 0;
         } else {
@@ -88,16 +65,15 @@ class TaskController extends Controller
         
         return redirect()->to(route('tasks.index'));
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    
+    
+    public function update(Request $request, Task $task)
     {
-        //
+        $task->task = $request->post('task'); //adiciona a task na coluna task
+        $task->description = $request->post('description'); //adiciona a description na coluna description
+        $task->save();
+        
+        return redirect()->to(route('tasks.index'));
     }
 
     /**
@@ -106,8 +82,8 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        //
+        
     }
 }
