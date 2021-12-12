@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateTaskRequest;
 
 class TaskController extends Controller
 {
@@ -27,6 +28,10 @@ class TaskController extends Controller
     
     public function store(Request $request)
     {
+        $request->validate([
+            'task' => 'required',
+            'description' => 'required'
+        ]);
 
         $task = new Task; //Usa o modelo
         $task->task = $request->post('task'); //adiciona a task na coluna task
@@ -65,9 +70,23 @@ class TaskController extends Controller
         
         return redirect()->to(route('tasks.index'));
     }
+
+    public function checked(Task $task)
+    {   
+        
+        $lista = Task::where('checked', 1)->get();
+        return view('tasks.checked', ['tasks'=>$lista]);
+    }
+
+
+    public function notChecked(Task $task)
+    {   
+        $lista = Task::where('checked', 0)->get();
+        return view('tasks.not-checked', ['tasks'=>$lista]);
+    }
     
     
-    public function update(Request $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
         $task->task = $request->post('task'); //adiciona a task na coluna task
         $task->description = $request->post('description'); //adiciona a description na coluna description

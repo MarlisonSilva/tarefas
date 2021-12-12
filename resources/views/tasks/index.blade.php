@@ -3,7 +3,7 @@
 
 @endsection
 @section('title-content')
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    <h1 class="h3 mb-0 text-gray-800">Tarefas</h1>
     <a href="{{ route('tasks.create') }}" class="d-inline-block btn btn-sm btn-primary shadow-sm"><i
         class="fas fa-plus text-white-50"></i> Criar tarefa</a>
 @endsection

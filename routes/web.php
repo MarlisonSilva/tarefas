@@ -8,7 +8,7 @@ use App\Models\Task;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/template', function(){
     return view('layout.template');
@@ -32,6 +32,12 @@ Route::post('/dashboard/tasks/{id}/show', [TaskController::class, 'show'])->name
 Route::post('/tasks/{task}/check', [TaskController::class, 'check'])
     ->name('tasks.check');
     
+Route::get('/tasks/not-checked', [TaskController::class, 'notChecked'])
+    ->name('tasks.not-checked');
+
+Route::get('/tasks/checked', [TaskController::class, 'checked'])
+    ->name('tasks.checked');
+
 Route::resource('/tasks', TaskController::class);
 
 // Route::get('/login', function (){
