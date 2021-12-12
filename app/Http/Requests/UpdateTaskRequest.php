@@ -28,4 +28,10 @@ class UpdateTaskRequest extends FormRequest
             'description' => 'required'
         ];
     }
+    public function messages() {
+        return [
+            'task.required' => 'Este campo é obrigatório!',
+            'descricao.required' => 'Este campo é obrigatório!'
+        ];
+    }
 }
