@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateTaskRequest;
+use Illuminate\Support\Facades\Auth;
+
 
 class TaskController extends Controller
 {
@@ -37,6 +39,7 @@ class TaskController extends Controller
         $task->task = $request->post('task'); //adiciona a task na coluna task
         $task->description = $request->post('description'); //adiciona a description na coluna description
         $task->checked = 0; //por padrão, adiciona false em checked
+        $task->user_id = Auth::id();
         $task->save(); //salva no banco (insert)
         
         return redirect()->to(route('tasks.index'));
